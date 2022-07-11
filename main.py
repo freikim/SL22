@@ -16,7 +16,7 @@ import cv2
 import numpy as np
 
 
-IMG_SIZE = 340
+IMG_SIZE = 512
 
 
 def load_stylegan_avatar():
