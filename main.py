@@ -19,19 +19,6 @@ import numpy as np
 IMG_SIZE = 340
 
 
-class LoginScreen(GridLayout):
-
-    def __init__(self, **kwargs):
-        super(LoginScreen, self).__init__(**kwargs)
-        self.cols = 2
-        self.add_widget(Label(text='User Name'))
-        self.username = TextInput(multiline=False)
-        self.add_widget(self.username)
-        self.add_widget(Label(text='Password'))
-        self.password = TextInput(password=True, multiline=False)
-        self.add_widget(self.password)
-
-
 def load_stylegan_avatar():
     url = "https://thispersondoesnotexist.com/image"
     r = requests.get(url, headers={'User-Agent': "My User Agent 1.0"}).content
@@ -60,9 +47,11 @@ class NonExistingPeopleScreen(Screen):
         pass
 
     def new_person(self, dt):
-        buf = load_stylegan_avatar()
-        texture1 = Texture.create(size=(IMG_SIZE, IMG_SIZE), colorfmt='bgr')
-        texture1.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
+        frame = load_stylegan_avatar()
+        buf1 = cv2.flip(frame, 0)
+        buf = buf1.tobytes()
+        texture1 = Texture.create(size=(IMG_SIZE, IMG_SIZE))
+        texture1.blit_buffer(buf, bufferfmt='ubyte')
         self.fake_person.texture = texture1
 
 
@@ -89,6 +78,7 @@ class CameraAndPlaybackScreen(Screen):
 
     def __init__(self, **kwargs):
         super(CameraAndPlaybackScreen, self).__init__(**kwargs)
+        self._timer = None
         self.layout = GridLayout()
         self.add_widget(self.layout)
         self.layout.cols = 2
@@ -99,11 +89,11 @@ class CameraAndPlaybackScreen(Screen):
         self.capture = cv2.VideoCapture(0)
 
     def on_enter(self, *args):
-        Clock.schedule_interval(self.update, 1.0/33.0)
+        self._timer = Clock.schedule_interval(self.update, 1.0/33.0)
         print('Scheduled...')
 
     def on_leave(self, *args):
-        pass
+        Clock.unschedule(self._timer)
 
     def update(self, dt):
         ret, frame = self.capture.read()
