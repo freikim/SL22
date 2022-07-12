@@ -1,20 +1,20 @@
+import random
+import requests
+
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
 from kivy.uix.videoplayer import VideoPlayer
 from kivy.uix.image import Image
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
-
-import requests
+from kivy.properties import StringProperty
 
 import cv2
 import numpy as np
-
 
 IMG_SIZE = 512
 
@@ -31,28 +31,85 @@ def load_stylegan_avatar():
     return image
 
 
+class ButtonRow(BoxLayout):
+
+    red_button = StringProperty(None)
+    green_button = StringProperty(None)
+    white_button = StringProperty(None)
+    black_button = StringProperty(None)
+
+    def __init__(self, **kwargs):
+        super(ButtonRow, self).__init__(**kwargs)
+        self.size_hint_max_y = 200
+
+    def on_red_button(self, instance, value):
+        self.build_btn(value, 'images/large_red_arcade.png')
+
+    def on_green_button(self, instance, value):
+        self.build_btn(value, 'images/large_green_arcade.png')
+
+    def on_white_button(self, instance, value):
+        self.build_btn(value, 'images/white_arcade.png')
+
+    def on_black_button(self, instance, value):
+        self.build_btn(value, 'images/black_arcade.png')
+
+    def build_btn(self, btn_txt, file):
+        cnt = BoxLayout()
+        btn = Image(source=file)
+        cnt.add_widget(btn)
+        lbl = Label()
+        lbl.text = btn_txt
+        cnt.add_widget(lbl)
+        self.add_widget(cnt)
+
+
+class IntroScreen(Screen):
+    pass
+
+
+class FakePersonAnswerScreen(Screen):
+    pass
+
+
 class NonExistingPeopleScreen(Screen):
 
     def __init__(self, **kwargs):
         super(NonExistingPeopleScreen, self).__init__(**kwargs)
-        self.layout = BoxLayout()
+        self._timer = None
+        self.layout = BoxLayout(orientation='vertical')
         self.add_widget(self.layout)
-        self.fake_person = Image()
-        self.layout.add_widget(self.fake_person)
+        self.label = Label(text="Du vil nu få vist nogle forskellige mennesker.\nHvad er ligheden mellem dem?\nTryk på en af svarknapperne.")
+        self.layout.add_widget(self.label)
+        self.fake_row = BoxLayout()
+        self.fake_person = []
+        for i in range(3):
+            self.fake_person.append(Image())
+            self.fake_row.add_widget(self.fake_person[-1])
+        self.layout.add_widget(self.fake_row)
 
     def on_enter(self, *args):
-        Clock.schedule_interval(self.new_person, 5)
+        self.new_person(None)
+        self._timer = Clock.schedule_interval(self.new_person, 5)
 
     def on_leave(self, *args):
-        pass
+        Clock.unschedule(self._timer)
+        self._timer = None
 
     def new_person(self, dt):
+        pos = None
+        for i in range(3):
+            if not self.fake_person[i].texture:
+                pos = self.fake_person[i]
+                break
+        if not pos:
+            pos = random.choice(self.fake_person)
         frame = load_stylegan_avatar()
         buf1 = cv2.flip(frame, 0)
         buf = buf1.tobytes()
         texture1 = Texture.create(size=(IMG_SIZE, IMG_SIZE))
         texture1.blit_buffer(buf, bufferfmt='ubyte')
-        self.fake_person.texture = texture1
+        pos.texture = texture1
 
 
 class VideoScreen(Screen):
@@ -89,11 +146,12 @@ class CameraAndPlaybackScreen(Screen):
         self.capture = cv2.VideoCapture(0)
 
     def on_enter(self, *args):
-        self._timer = Clock.schedule_interval(self.update, 1.0/33.0)
+        self._timer = Clock.schedule_interval(self.update, 1.0 / 33.0)
         print('Scheduled...')
 
     def on_leave(self, *args):
         Clock.unschedule(self._timer)
+        self._timer = None
 
     def update(self, dt):
         ret, frame = self.capture.read()
@@ -111,10 +169,12 @@ class Screens(BoxLayout):
         self._keyboard.bind(on_key_down=self.on_keyboard_down)
 
         self.sm = ScreenManager()
+        self.sm.add_widget(IntroScreen(name='intro'))
         self.sm.add_widget(CameraAndPlaybackScreen(name='camfun'))
         self.sm.add_widget(VideoScreen(name='videos'))
         self.sm.add_widget(NonExistingPeopleScreen(name='persons'))
-        self.sm.current = 'videos'
+        self.sm.add_widget(FakePersonAnswerScreen(name='fake_answer'))
+        self.sm.current = 'intro'
         self.add_widget(self.sm)
 
     def _keyboard_closed(self):
@@ -122,23 +182,20 @@ class Screens(BoxLayout):
         self._keyboard = None
 
     def on_keyboard_down(self, keyboard, keycode, text, modifiers):
-        print('The key', keycode, 'have been pressed')
-        # Keycode is composed of an integer + a string
-        # If we hit escape, release the keyboard
         if keycode[1] == 'n':
-            print('switch screen to ', self.sm.next())
             self.sm.current = self.sm.next()
+        elif keycode[1] == 'escape':
+            App.get_running_app().stop()
 
-        # Return True to accept the key. Otherwise, it will be used by
-        # the system.
         return True
 
 
-class MyApp(App):
+class SL22App(App):
 
     def build(self):
         return Screens()
 
 
 if __name__ == '__main__':
-    MyApp().run()
+    # Window.fullscreen = 'auto'
+    SL22App().run()
