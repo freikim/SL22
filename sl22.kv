@@ -1,4 +1,6 @@
+#:kivy 1.0
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
+
 Screens:
     transition: FadeTransition()
     IntroScreen:
@@ -12,26 +14,71 @@ Screens:
     BoxLayout:
         orientation: 'vertical'
         Image:
-            source: 'images/banner.png'
+            source: 'images/banner.gif'
         Label:
             text: 'Her kommer der intro text'
         ButtonRow:
             red_button: 'Lad os komme igang!'
 
-# <NonExistingPeopleScreen>:
-#         name: 'persons'
+<NonExistingPeopleScreen>:
+    name: 'persons'
+    on_kv_post: self.setup_persons()
+    BoxLayout:
+        orientation: 'vertical'
+        id: persons_box
+        Image:
+            source: 'images/persons.png'
+        Label:
+            text: 'Du vil nu få vist nogle forskellige mennesker.\nHvad er ligheden mellem dem?\nTryk på en af svarknapperne.'
+        BoxLayout:
+            id: fake_row
+        ButtonRow:
+            red_button: 'Videre!'
+            green_button: 'De er alle berømte'
+            black_button: 'De deltager på lejren'
+            white_button: 'De findes ikke i virkeligheden'
 
 <FakePersonAnswerScreen>:
     name:'fake_answer'
     BoxLayout:
         orientation: 'vertical'
+        Image:
+            source: 'images/answer.png'
         Label:
             text: 'Det er rigtigt!'
         ButtonRow:
             red_button: 'Lad os komme videre'
 
-# <CameraAndPlaybackScreen>:
-#     name: 'camfun'
+<CameraAndPlaybackScreen>:
+    name: 'camfun'
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            source: 'images/avatar.png'
+        GridLayout:
+            cols: 2
+            Image:
+                id: image1
+            Image:
+                id: image2
+        ButtonRow:
+            red_button: 'Lad os komme videre'
+            black_button: 'Næste Avatar'
+            white_button: 'Forrige Avatar'
 
-# <VideoScreen>:
-#     name: 'videos'
+<VideoScreen>:
+    name: 'videos'
+    on_enter: player.state = 'play'
+    on_leave: player.state = 'stop'
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            source: 'images/videos.png'
+        VideoPlayer:
+            id: player
+            source: 'videos/vocodes_video_JWINF2kb4vy9hqph994zbmq0e0khchm.mp4'
+            state: 'stop'
+        ButtonRow:
+            red_button: 'Lad os komme videre'
+            black_button: 'Næste video'
+            white_button: 'Forrige video'
