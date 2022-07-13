@@ -76,6 +76,7 @@ class NonExistingPeopleScreen(Screen):
 
     def __init__(self, **kwargs):
         super(NonExistingPeopleScreen, self).__init__(**kwargs)
+        self.name = 'persons'
         self._timer = None
         self.layout = BoxLayout(orientation='vertical')
         self.add_widget(self.layout)
@@ -162,20 +163,12 @@ class CameraAndPlaybackScreen(Screen):
         self.image1.texture = texture1
 
 
-class Screens(BoxLayout):
+class Screens(ScreenManager):
+
     def __init__(self, **kwargs):
         super(Screens, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self, 'text')
         self._keyboard.bind(on_key_down=self.on_keyboard_down)
-
-        self.sm = ScreenManager()
-        self.sm.add_widget(IntroScreen(name='intro'))
-        self.sm.add_widget(CameraAndPlaybackScreen(name='camfun'))
-        self.sm.add_widget(VideoScreen(name='videos'))
-        self.sm.add_widget(NonExistingPeopleScreen(name='persons'))
-        self.sm.add_widget(FakePersonAnswerScreen(name='fake_answer'))
-        self.sm.current = 'intro'
-        self.add_widget(self.sm)
 
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self.on_keyboard_down)
@@ -183,7 +176,9 @@ class Screens(BoxLayout):
 
     def on_keyboard_down(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'n':
-            self.sm.current = self.sm.next()
+            print('screens:', self.screens)
+            print('go to screen: ', self.next())
+            self.current = self.next()
         elif keycode[1] == 'escape':
             App.get_running_app().stop()
 
@@ -191,10 +186,7 @@ class Screens(BoxLayout):
 
 
 class SL22App(App):
-
-    def build(self):
-        return Screens()
-
+    pass
 
 if __name__ == '__main__':
     # Window.fullscreen = 'auto'

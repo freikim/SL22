@@ -1,4 +1,14 @@
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+Screens:
+    transition: FadeTransition()
+    IntroScreen:
+    NonExistingPeopleScreen:
+    FakePersonAnswerScreen:
+    CameraAndPlaybackScreen:
+    VideoScreen:
+
 <IntroScreen>:
+    name: 'intro'
     BoxLayout:
         orientation: 'vertical'
         Image:
@@ -8,10 +18,20 @@
         ButtonRow:
             red_button: 'Lad os komme igang!'
 
+# <NonExistingPeopleScreen>:
+#         name: 'persons'
+
 <FakePersonAnswerScreen>:
+    name:'fake_answer'
     BoxLayout:
         orientation: 'vertical'
         Label:
             text: 'Det er rigtigt!'
         ButtonRow:
             red_button: 'Lad os komme videre'
+
+# <CameraAndPlaybackScreen>:
+#     name: 'camfun'
+
+# <VideoScreen>:
+#     name: 'videos'
