@@ -7,7 +7,7 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.graphics.texture import Texture
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, NumericProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
@@ -17,6 +17,7 @@ IMG_SIZE = 512
 
 
 def load_stylegan_avatar():
+    print('new avatar')
     url = "https://thispersondoesnotexist.com/image"
     r = requests.get(url, headers={'User-Agent': "My User Agent 1.0"}).content
 
@@ -36,7 +37,7 @@ class ButtonRow(BoxLayout):
 
     def __init__(self, **kwargs):
         super(ButtonRow, self).__init__(**kwargs)
-        self.size_hint_max_y = 200
+        self.size_hint_max_y = 150
 
     def on_red_button(self, instance, value):
         self.build_btn(value, 'images/large_red_arcade.png')
@@ -107,7 +108,23 @@ class NonExistingPeopleScreen(Screen):
 
 
 class VideoScreen(Screen):
-    pass
+    idx = NumericProperty(0)
+    videos = [
+        'videos/vocodes_video_JWINF2kb4vy9hqph994zbmq0e0khchm.mp4',
+        'videos/vocodes_video_JWINFe8289c79rt5czjgp2w7t915tp1.mp4'
+    ]
+
+    def on_keyboard(self, key):
+        if key == 'w':
+            if self.idx == len(self.videos) - 1:
+                self.idx = 0
+            else:
+                self.idx += 1
+        elif key == 'b':
+            if self.idx == 0:
+                self.idx = len(self.videos) - 1
+            else:
+                self.idx -= 1
 
 
 class CameraAndPlaybackScreen(Screen):
@@ -149,10 +166,12 @@ class Screens(ScreenManager):
 
     def on_keyboard_down(self, keyboard, keycode, text, modifiers):
         self._activity = True
-        if keycode[1] == 'n':
+        if keycode[1] == 'r':
             print('screens:', self.screens)
             print('go to screen: ', self.next())
             self.current = self.next()
+        elif keycode[1] in ['g', 'w', 'b']:
+            self.current_screen.on_keyboard(keycode[1])
         elif keycode[1] == 'escape':
             App.get_running_app().stop()
 

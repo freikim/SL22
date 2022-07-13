@@ -68,16 +68,23 @@ Screens:
 
 <VideoScreen>:
     name: 'videos'
+    id: container
     on_enter: player.state = 'play'
     on_leave: player.state = 'stop'
+    on_idx: player.state = 'play'
     BoxLayout:
         orientation: 'vertical'
         Image:
+            size_hint: (1, 0.2)
             source: 'images/videos.png'
         VideoPlayer:
             id: player
-            source: 'videos/vocodes_video_JWINF2kb4vy9hqph994zbmq0e0khchm.mp4'
+            size_hint: (1, 0.4)
+            source: container.videos[container.idx]
             state: 'stop'
+        Label:
+            size_hint: (1, 0.1)
+            text: 'Alle videoer der vises her er lavet med Vocodes. For at lave dine egne, så besøg www.vocodes.com'
         ButtonRow:
             red_button: 'Lad os komme videre'
             black_button: 'Næste video'
