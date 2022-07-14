@@ -40,12 +40,15 @@ Screens:
 
 <FakePersonAnswerScreen>:
     name:'fake_answer'
+    id: answer_screen
     BoxLayout:
         orientation: 'vertical'
         Image:
-            source: 'images/answer.png'
+            source: 'images/correct.png' if answer_screen.correct else 'images/wrong.png'
         Label:
-            text: 'Det er rigtigt!'
+            text: 'Det er helt rigtigt!' if answer_screen.correct else 'Det er desværre forkert!'
+        Label:
+            text: 'Alle de portrætter, du så, er lavet med kunstig intelligens. Man har oplært en kunstig intelligens i, hvordan et menneskes ansigt ser ud. Så kan man bede om at der bliver laavet lignende ansigter.'
         ButtonRow:
             yellow_button: 'Lad os komme videre'
 

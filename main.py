@@ -7,7 +7,7 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.graphics.texture import Texture
-from kivy.properties import StringProperty, NumericProperty
+from kivy.properties import StringProperty, NumericProperty, BooleanProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
@@ -71,7 +71,8 @@ class IntroScreen(Screen):
 
 
 class FakePersonAnswerScreen(Screen):
-    pass
+
+    correct = BooleanProperty(False)
 
 
 class NonExistingPeopleScreen(Screen):
@@ -111,6 +112,16 @@ class NonExistingPeopleScreen(Screen):
         texture1.blit_buffer(buf, bufferfmt='ubyte')
         pos.texture = texture1
 
+    def on_keyboard(self, key):
+        manager = self.manager
+        answer_screen = self.manager.get_screen('fake_answer')
+        if key == WHITE_KEY:
+            answer_screen.correct = True
+        else:
+            answer_screen.correct = False
+        print('go to answer screen:', key, answer_screen.correct)
+        manager.current = 'fake_answer'
+
 
 class VideoScreen(Screen):
     idx = NumericProperty(0)
@@ -131,6 +142,9 @@ class VideoScreen(Screen):
                 self.idx = len(self.videos) - 1
             else:
                 self.idx -= 1
+
+    def keyboard_on_key_down(self, window, keycode, text, modifiers):
+        print('keyboard_on_key_down', keycode)
 
 
 class CameraAndPlaybackScreen(Screen):
