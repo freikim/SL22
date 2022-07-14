@@ -15,6 +15,11 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 
 IMG_SIZE = 512
 
+YELLOW_KEY = 'g'
+BLUE_KEY = 'b'
+WHITE_KEY = 'h'
+BLACK_KEY = 's'
+
 
 def load_stylegan_avatar():
     print('new avatar')
@@ -30,8 +35,8 @@ def load_stylegan_avatar():
 
 
 class ButtonRow(BoxLayout):
-    red_button = StringProperty(None)
-    green_button = StringProperty(None)
+    yellow_button = StringProperty(None)
+    blue_button = StringProperty(None)
     white_button = StringProperty(None)
     black_button = StringProperty(None)
 
@@ -39,11 +44,11 @@ class ButtonRow(BoxLayout):
         super(ButtonRow, self).__init__(**kwargs)
         self.size_hint_max_y = 150
 
-    def on_red_button(self, instance, value):
-        self.build_btn(value, 'images/large_red_arcade.png')
+    def on_yellow_button(self, instance, value):
+        self.build_btn(value, 'images/large_yellow_arcade.png')
 
-    def on_green_button(self, instance, value):
-        self.build_btn(value, 'images/large_green_arcade.png')
+    def on_blue_button(self, instance, value):
+        self.build_btn(value, 'images/large_blue_arcade.png')
 
     def on_white_button(self, instance, value):
         self.build_btn(value, 'images/white_arcade.png')
@@ -116,12 +121,12 @@ class VideoScreen(Screen):
     ]
 
     def on_keyboard(self, key):
-        if key == 'w':
+        if key == WHITE_KEY:
             if self.idx == len(self.videos) - 1:
                 self.idx = 0
             else:
                 self.idx += 1
-        elif key == 'b':
+        elif key == BLACK_KEY:
             if self.idx == 0:
                 self.idx = len(self.videos) - 1
             else:
@@ -157,6 +162,7 @@ class Screens(ScreenManager):
     def __init__(self, **kwargs):
         super(Screens, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self, 'text')
+        print('Keyboard:', self._keyboard)
         self._keyboard.bind(on_key_down=self.on_keyboard_down)
         self._inactivity_timer = Clock.schedule_interval(self._inactive, 30)
         self._activity = False
@@ -167,11 +173,11 @@ class Screens(ScreenManager):
 
     def on_keyboard_down(self, keyboard, keycode, text, modifiers):
         self._activity = True
-        if keycode[1] == 'r':
+        if keycode[1] == YELLOW_KEY:
             print('screens:', self.screens)
             print('go to screen: ', self.next())
             self.current = self.next()
-        elif keycode[1] in ['g', 'w', 'b']:
+        elif keycode[1] in [BLUE_KEY, BLACK_KEY, WHITE_KEY]:
             self.current_screen.on_keyboard(keycode[1])
         elif keycode[1] == 'escape':
             App.get_running_app().stop()
