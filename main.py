@@ -1,5 +1,6 @@
 import requests
 import random
+import glob
 import cv2
 import numpy as np
 
@@ -13,12 +14,35 @@ from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
 
-IMG_SIZE = 512
+from predictor_local import PredictorLocal
+from utils import resize, crop
+
+IMG_SIZE = 256
 
 YELLOW_KEY = 'g'
 BLUE_KEY = 'b'
 WHITE_KEY = 'h'
 BLACK_KEY = 's'
+
+
+def load_images(IMG_SIZE=256):
+    avatars = []
+    filenames = []
+    images_list = sorted(glob.glob(f'avatars/*'))
+    for i, f in enumerate(images_list):
+        if f.endswith('.jpg') or f.endswith('.jpeg') or f.endswith('.png'):
+            img = cv2.imread(f)
+            if img is None:
+                print("Failed to open image: {}".format(f))
+                continue
+
+            if img.ndim == 2:
+                img = np.tile(img[..., None], [1, 1, 3])
+            img = img[..., :3][..., ::-1]
+            img = resize(img, (IMG_SIZE, IMG_SIZE))
+            avatars.append(img)
+            filenames.append(f)
+    return avatars, filenames
 
 
 def load_stylegan_avatar():
@@ -71,7 +95,6 @@ class IntroScreen(Screen):
 
 
 class FakePersonAnswerScreen(Screen):
-
     correct = BooleanProperty(False)
 
 
@@ -143,9 +166,6 @@ class VideoScreen(Screen):
             else:
                 self.idx -= 1
 
-    def keyboard_on_key_down(self, window, keycode, text, modifiers):
-        print('keyboard_on_key_down', keycode)
-
 
 class CameraAndPlaybackScreen(Screen):
 
@@ -153,6 +173,23 @@ class CameraAndPlaybackScreen(Screen):
         super(CameraAndPlaybackScreen, self).__init__(**kwargs)
         self._timer = None
         self.capture = cv2.VideoCapture(0)
+        self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        predictor_args = {
+            'config_path': 'fomm/config/vox-adv-256.yaml',
+            'checkpoint_path': 'vox-adv-cpk.pth.tar',
+            'relative': True,
+            'adapt_movement_scale': True,
+            'enc_downscale': False
+        }
+        self.is_calibrated = False
+        self.predictor = PredictorLocal(**predictor_args)
+        self.cur_avatar = 0
+        self.avatar = None
+        self.avatar_kp = None
+        self.kp_source = None
+        self.avatars, self.avatar_names = load_images()
+        self.change_avatar(self.avatars[self.cur_avatar])
 
     def on_enter(self, *args):
         self._timer = Clock.schedule_interval(self.update, 1.0 / 33.0)
@@ -163,12 +200,51 @@ class CameraAndPlaybackScreen(Screen):
         self._timer = None
 
     def update(self, dt):
+        frame_proportion = 0.9
+        frame_offset_x = 0
+        frame_offset_y = 0
+
         ret, frame = self.capture.read()
+        frame = frame[..., ::-1]
+
+        frame, (frame_offset_x, frame_offset_y) = crop(frame, p=frame_proportion, offset_x=frame_offset_x,
+                                                       offset_y=frame_offset_y)
+        frame = resize(frame, (IMG_SIZE, IMG_SIZE))[..., :3]
+
         buf1 = cv2.flip(frame, 0)
         buf = buf1.tobytes()
-        texture1 = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
-        texture1.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
-        self.ids['image1'].texture = texture1
+        texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='rgb')
+        texture.blit_buffer(buf, colorfmt='rgb', bufferfmt='ubyte')
+        self.ids['camera'].texture = texture
+
+        if self.is_calibrated:
+            buf1 = self.predictor.predict(frame)
+            buf1 = cv2.flip(buf1, 0)
+            buf = buf1.tobytes()
+            texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='rgb')
+            texture.blit_buffer(buf, colorfmt='rgb', bufferfmt='ubyte')
+            self.ids['avatar'].texture = texture
+
+    def change_avatar(self, new_avatar):
+        self.avatar_kp = self.predictor.get_frame_kp(new_avatar)
+        self.kp_source = None
+        self.avatar = new_avatar
+        self.predictor.set_source_image(self.avatar)
+
+    def on_keyboard(self, key):
+        if key == WHITE_KEY:
+            self.cur_avatar -= 1
+            if self.cur_avatar < 0:
+                self.cur_avatar = len(self.avatars) - 1
+            self.change_avatar(self.avatars[self.cur_avatar])
+        elif key == BLACK_KEY:
+            self.cur_avatar += 1
+            if self.cur_avatar >= len(self.avatars):
+                self.cur_avatar = 0
+            self.change_avatar(self.avatars[self.cur_avatar])
+        elif key == BLUE_KEY:
+            self.predictor.reset_frames()
+            self.is_calibrated = True
 
 
 class Screens(ScreenManager):
