@@ -58,6 +58,24 @@ def load_stylegan_avatar():
     return image
 
 
+def draw_rect(img, rw=0.6, rh=0.8, color=(255, 0, 0), thickness=2):
+    h, w = img.shape[:2]
+    l = w * (1 - rw) // 2
+    r = w - l
+    u = h * (1 - rh) // 2
+    d = h - u
+    img = cv2.rectangle(img, (int(l), int(u)), (int(r), int(d)), color, thickness)
+
+
+def draw_calib_text(frame, thk=2, fontsz=0.5, color=(0, 0, 255)):
+    frame = frame.copy()
+    cv2.putText(frame, "FIT FACE IN RECTANGLE", (40, 20), 0, fontsz * IMG_SIZE / 255, color, thk)
+    cv2.putText(frame, "W - ZOOM IN", (60, 40), 0, fontsz * IMG_SIZE / 255, color, thk)
+    cv2.putText(frame, "S - ZOOM OUT", (60, 60), 0, fontsz * IMG_SIZE / 255, color, thk)
+    cv2.putText(frame, "THEN PRESS X", (60, 245), 0, fontsz * IMG_SIZE / 255, color, thk)
+    return frame
+
+
 class ButtonRow(BoxLayout):
     yellow_button = StringProperty(None)
     blue_button = StringProperty(None)
@@ -91,11 +109,18 @@ class ButtonRow(BoxLayout):
 
 
 class IntroScreen(Screen):
-    pass
+
+    def on_keyboard(self, key):
+        if key == YELLOW_KEY:
+            self.manager.current = 'persons'
 
 
 class FakePersonAnswerScreen(Screen):
     correct = BooleanProperty(False)
+
+    def on_keyboard(self, key):
+        if key == YELLOW_KEY:
+            self.manager.current = 'camfun'
 
 
 class NonExistingPeopleScreen(Screen):
@@ -137,12 +162,14 @@ class NonExistingPeopleScreen(Screen):
 
     def on_keyboard(self, key):
         manager = self.manager
-        answer_screen = self.manager.get_screen('fake_answer')
-        if key == WHITE_KEY:
+        answer_screen = manager.get_screen('fake_answer')
+        if key == YELLOW_KEY:
+            manager.current = 'camfun'
+            return
+        elif key == WHITE_KEY:
             answer_screen.correct = True
         else:
             answer_screen.correct = False
-        print('go to answer screen:', key, answer_screen.correct)
         manager.current = 'fake_answer'
 
 
@@ -189,10 +216,12 @@ class CameraAndPlaybackScreen(Screen):
         self.avatar_kp = None
         self.kp_source = None
         self.avatars, self.avatar_names = load_images()
-        self.change_avatar(self.avatars[self.cur_avatar])
 
     def on_enter(self, *args):
         self._timer = Clock.schedule_interval(self.update, 1.0 / 33.0)
+        self.cur_avatar = 0
+        self.change_avatar(self.avatars[self.cur_avatar])
+        self.is_calibrated = False
         print('Scheduled...')
 
     def on_leave(self, *args):
@@ -211,19 +240,26 @@ class CameraAndPlaybackScreen(Screen):
                                                        offset_y=frame_offset_y)
         frame = resize(frame, (IMG_SIZE, IMG_SIZE))[..., :3]
 
+        preview_frame = frame.copy()
+        draw_rect(preview_frame)
+        if not self.is_calibrated:
+            preview_frame = draw_calib_text(preview_frame)
+        self.ids['camera'].texture = self.to_texture(preview_frame)
+
+        if self.is_calibrated:
+            predicted = self.predictor.predict(frame)
+            self.ids['avatar'].texture = self.to_texture(predicted)
+        else:
+            pic = self.avatars[self.cur_avatar]
+            pic = resize(pic, (IMG_SIZE, IMG_SIZE))[..., :3]
+            self.ids['avatar'].texture = self.to_texture(pic)
+
+    def to_texture(self, frame):
         buf1 = cv2.flip(frame, 0)
         buf = buf1.tobytes()
         texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='rgb')
         texture.blit_buffer(buf, colorfmt='rgb', bufferfmt='ubyte')
-        self.ids['camera'].texture = texture
-
-        if self.is_calibrated:
-            buf1 = self.predictor.predict(frame)
-            buf1 = cv2.flip(buf1, 0)
-            buf = buf1.tobytes()
-            texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='rgb')
-            texture.blit_buffer(buf, colorfmt='rgb', bufferfmt='ubyte')
-            self.ids['avatar'].texture = texture
+        return texture
 
     def change_avatar(self, new_avatar):
         self.avatar_kp = self.predictor.get_frame_kp(new_avatar)
@@ -245,6 +281,8 @@ class CameraAndPlaybackScreen(Screen):
         elif key == BLUE_KEY:
             self.predictor.reset_frames()
             self.is_calibrated = True
+        elif key == YELLOW_KEY:
+            self.manager.current = 'intro'
 
 
 class Screens(ScreenManager):
@@ -263,13 +301,10 @@ class Screens(ScreenManager):
 
     def on_keyboard_down(self, keyboard, keycode, text, modifiers):
         self._activity = True
-        if keycode[1] == YELLOW_KEY:
-            print('screens:', self.screens)
-            print('go to screen: ', self.next())
-            self.current = self.next()
-        elif keycode[1] in [BLUE_KEY, BLACK_KEY, WHITE_KEY]:
-            self.current_screen.on_keyboard(keycode[1])
-        elif keycode[1] == 'escape':
+        key = keycode[1]
+        if key in [YELLOW_KEY, BLUE_KEY, BLACK_KEY, WHITE_KEY]:
+            self.current_screen.on_keyboard(key)
+        elif key == 'escape':
             App.get_running_app().stop()
 
         return True
