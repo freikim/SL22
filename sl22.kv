@@ -8,15 +8,20 @@ Screens:
     FakePersonAnswerScreen:
     CameraAndPlaybackScreen:
     VideoScreen:
+    Outro:
 
 <IntroScreen>:
     name: 'intro'
     BoxLayout:
         orientation: 'vertical'
         Image:
-            source: 'images/banner.gif'
+            source: 'images/banner.png'
         Label:
-            text: 'Her kommer der intro text'
+            text: app.texts['intro']
+        VideoPlayer:
+            size_hint: (1, 0.4)
+            source: 'videos/Top 80 Deepfake Videos - Only Highlights!.mp4'
+            state: 'stop'
         ButtonRow:
             yellow_button: 'Lad os komme igang!'
 
@@ -29,7 +34,7 @@ Screens:
         Image:
             source: 'images/persons.png'
         Label:
-            text: 'Du vil nu få vist nogle forskellige mennesker.\nHvad er ligheden mellem dem?\nTryk på en af svarknapperne.'
+            text: app.texts['persons']
         BoxLayout:
             id: fake_row
         ButtonRow:
@@ -48,7 +53,7 @@ Screens:
         Label:
             text: 'Det er helt rigtigt!' if answer_screen.correct else 'Det er desværre forkert!'
         Label:
-            text: 'Alle de portrætter, du så, er lavet med kunstig intelligens. Man har oplært en kunstig intelligens i, hvordan et menneskes ansigt ser ud. Så kan man bede om at der bliver laavet lignende ansigter.'
+            text: app.texts['persons_explanation']
         ButtonRow:
             yellow_button: 'Lad os komme videre'
 
@@ -58,6 +63,8 @@ Screens:
         orientation: 'vertical'
         Image:
             source: 'images/avatar.png'
+        Label:
+            text: app.texts['camfun']
         GridLayout:
             cols: 2
             Image:
@@ -88,8 +95,14 @@ Screens:
             state: 'stop'
         Label:
             size_hint: (1, 0.1)
-            text: 'Alle videoer der vises her er lavet med Vocodes. For at lave dine egne, så besøg www.vocodes.com'
+            text: app.texts['videos']
         ButtonRow:
             yellow_button: 'Lad os komme videre'
             black_button: 'Næste video'
             white_button: 'Forrige video'
+
+<Outro>:
+    name: 'outro'
+    BoxLayout:
+        Label:
+            text: app.texts['outro']
