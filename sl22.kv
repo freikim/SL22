@@ -12,16 +12,26 @@ Screens:
 
 <IntroScreen>:
     name: 'intro'
+    on_enter: intro_video.state = 'play'
+    on_leave: intro_video.state = 'pause'
     BoxLayout:
         orientation: 'vertical'
         Image:
+            size_hint: 1, None
             source: 'images/banner.png'
         Label:
+            size_hint: 1, None
             text: app.texts['intro']
+            font_size: 18
+            text_size: self.size
+            halign: 'center'
         VideoPlayer:
-            size_hint: (1, 0.4)
+            id: intro_video
+            size_hint: 1, 0.5
             source: 'videos/Top 80 Deepfake Videos - Only Highlights!.mp4'
-            state: 'stop'
+            annotations: 'videos/subtitles.jsa'
+            state: 'play'
+            options: {'eos': 'loop'}
         ButtonRow:
             yellow_button: 'Lad os komme igang!'
 
@@ -32,9 +42,14 @@ Screens:
         orientation: 'vertical'
         id: persons_box
         Image:
+            size_hint: 1, None
             source: 'images/persons.png'
         Label:
+            size_hint: 1, None
             text: app.texts['persons']
+            text_size: self.size
+            font_size: 24
+            halign: 'center'
         BoxLayout:
             id: fake_row
         ButtonRow:
@@ -49,11 +64,19 @@ Screens:
     BoxLayout:
         orientation: 'vertical'
         Image:
+            size_hint: 1, None
             source: 'images/correct.png' if answer_screen.correct else 'images/wrong.png'
         Label:
-            text: 'Det er helt rigtigt!' if answer_screen.correct else 'Det er desværre forkert!'
+            size_hint: 1, None
+            font_size: 32
+            text: 'Det er helt rigtigt!\nDe findes nemlig slet ikke.' if answer_screen.correct else 'Det er desværre forkert!\nDe findes ikke i virkeligheden.'
+            halign: 'center'
         Label:
             text: app.texts['persons_explanation']
+            text_size: self.size
+            font_size: 18
+            halign: 'center'
+            valign: 'center'
         ButtonRow:
             yellow_button: 'Lad os komme videre'
 
@@ -62,15 +85,24 @@ Screens:
     BoxLayout:
         orientation: 'vertical'
         Image:
+            size_hint: 1, None
             source: 'images/avatar.png'
         Label:
+            size_hint: 1, None
             text: app.texts['camfun']
+            font_size: 12
+            text_size: self.size
+            halign: 'center'
         GridLayout:
+            size_hint_max_y: 200
             cols: 2
+            spacing: 100
             Image:
                 id: camera
+                halign: 'right'
             Image:
                 id: avatar
+                halign: 'left'
         ButtonRow:
             yellow_button: 'Lad os komme videre'
             blue_button: 'Kalibrer billedet'
@@ -86,16 +118,17 @@ Screens:
     BoxLayout:
         orientation: 'vertical'
         Image:
-            size_hint: (1, 0.2)
+            size_hint: 1, None
             source: 'images/videos.png'
         VideoPlayer:
             id: player
-            size_hint: (1, 0.4)
+            size_hint: 1, 0.4
             source: container.videos[container.idx]
             state: 'stop'
         Label:
-            size_hint: (1, 0.1)
+            size_hint: 1, None
             text: app.texts['videos']
+            text_size: self.size
         ButtonRow:
             yellow_button: 'Lad os komme videre'
             black_button: 'Næste video'
@@ -104,5 +137,12 @@ Screens:
 <Outro>:
     name: 'outro'
     BoxLayout:
+        orientation: 'vertical'
+        Image:
+            size_hint: 1, None
+            source: 'images/outro.png'
         Label:
+            size_hint: 1, None
             text: app.texts['outro']
+            text_size: self.size
+            halign: 'center'
