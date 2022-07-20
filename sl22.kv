@@ -16,27 +16,16 @@ Screens:
     Image:
         source: root.file
         size_hint: None, None
-        canvas.before:
-            Color:
-                rgba: 0, 1, 0, 0.3
-            Rectangle:
-                pos: self.pos
-                size: self.size
+        halign: 'right'
     Label:
         text: root.text
         text_size: self.size
         size_hint: None, None
         halign: 'left'
         valign: 'center'
-        canvas.before:
-            Color:
-                rgba: 1, 0, 0, 0.3
-            Rectangle:
-                pos: self.pos
-                size: self.size
 
 <ButtonRow>:
-    halign: 'center'
+    size_hint_y: None
 
 <IntroScreen>:
     name: 'intro'
@@ -58,11 +47,13 @@ Screens:
             id: intro_video
             size_hint: 1, 0.5
             source: 'videos/Top 80 Deepfake Videos - Only Highlights!.mp4'
-            annotations: 'videos/subtitles.jsa'
+            annotations: 'videos/subtitles_da.jsa' if app.lang == 'da' else 'videos/subtitles_en.jsa'
             state: 'play'
             on_state: root.restart_video()
         ButtonRow:
-            yellow_button: 'Lad os komme igang!'
+            yellow_button: app.texts['lets_start']
+            white_button: 'Dansk'
+            black_button: 'English'
 
 <NonExistingPeopleScreen>:
     name: 'persons'

@@ -9,7 +9,7 @@ from kivy.config import Config
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.graphics.texture import Texture
-from kivy.properties import StringProperty, NumericProperty, BooleanProperty
+from kivy.properties import StringProperty, NumericProperty, BooleanProperty, DictProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -17,87 +17,14 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from predictor_local import PredictorLocal
 from utils import resize, crop
 
+from texts import texts_da, texts_en
+
 IMG_SIZE = 256
 
 YELLOW_KEY = 'g'
 BLUE_KEY = 'b'
 WHITE_KEY = 'h'
 BLACK_KEY = 's'
-
-texts = {
-    'intro': '''
-Med kunstig intelligens er det muligt at ændre videoer og billeder, så det oprindelige indhold bliver erstattet af noget andet.
-Det kalder man Deep Fake. Her kan du se nogle eksempler på Deep Fake videoer og selv lege med at styre en kendts ansigt.
-YuoTube kanalen "Daily Dose of Deepfake" viser her 80 af de bedste Deep Fakes.
-''',
-    'videos': '''
-På fakeyou.com kan du lave dine egne små videoer, hvor en kendt person siger eller synder det, som du har optaget i en lydfil.
-Vi har lavet nogle stykker, som du kan se her.
-
-Tryk på knapperne for at springe frem og tilbage mellem videoerne.
-    ''',
-    'persons': '''
-Her ser du billeder af nogle personer. Hvad har de til fælles?
-    ''',
-    'persons_explanation': '''
-Grafikkort producenten Nvidia arbejdede i 2018 med at lave en kunstig
-intelligens, der kunne afsløre falske billeder af ansigter. Under det
-arbejde fandt de ud af, at man faktisk også kan få den samme kunstige
-intelligens til at fremstille ansigter af mennesker,
-der slet ikke eksisterer.
-
-Faktisk viser undersøgelser at i 90% af tilfældene kan et menneske ikke afgøre, at der er tale om et falsk ansigt.
-
-Kunne du spotte nogle falske ansigter?
-Billederne har måske små fejl, der gør at du kan se at det er et falsk ansigt.
-Meget ofte er der problemer med ansigtets symmetri og det er noget vi mennesker
-er ret følsomme overfor. Specielt kan briller og øreringe se mærkeligt ud eller
-sidde mærkeligt. Andre fejl, der tit optræder er mærkelige baggrunde,
-specielt hvis der er mere end et ansigt i billedet. 
-''',
-    'camfun': '''
-Nogle forskere arbejdede med at lære kunstig intelligens at bevæge et billede ud fra videooptagelser af en anden situation.
-Det er der kommet denne lille sjove applikation ud af. Du kan styre nogle forskellige personer, som du burde kende,
-ved at se ind i kameraet, få dit ansigt til at fylde den blå firkant og så trykke på knappen “Kalibrer billedet”.
-Prøv at bevæge dig og tal, blink med øjnene, drej hovedet fra side til side.
-Prøv også at ændre afstanden mellem kameraet og dit hovede.
-Kan du se begrænsningerne i den kunstige intelligens? Det er ikke altid at resultatet ser super godt ud.
-
-Denne software kan installeres på din PC og bruges til at ændre en optagelse af dig til noget andet,
-når du f.eks. deltager i et Zoom møde eller er i Teams sammen med dine klassekammerater.
-Hvis du vil hente det selv, så skal u nok være lidt skrap til engelsk og til PC’ere, men du kan
-finde vejledningen på https://github.com/alievk/avatarify-desktop under Installation.
-Du skal have en Gamer PC for grafikkortet bruges til beregningerne, der altså kræver en hel del,, når det skal være live video.
-    ''',
-    'outro': '''
-Nu har du set nogle eksempler på hvordan man kan lave falske videoer og endda styre en anden person live
-og dermed lave en falsk optræden på Zoom eller Teams. Det vi har vist her er harmløst og er bare sjov,
-men i forbindelse med krigen i Ukraine har Rusland lavet en Deepfake med Ukraines præsident Zelensky,
-hvor han siger til de Ukrainske styrker at de skal overgive sig og nedlægge våbnene. Den video var faktisk
-ikke særligt god, så der er nok ingen, der ville tro på det uden lige at undersøge sagen nærmere.
-Men nogle af de videoer du så på introduktionssiden er lavet super professionelt og kan være svære at afsløre
-som falske. Nogle af dem kan du kun se er falske, fordi du ved, hvem der er den rigtige skuespiller i filmen.
-
-Hvad nu hvis du ikke selv har lyst til at blive brugt i en Deepfake video?
-Hvis du husker fra ‘Styr en kendt’, så havde teknologien nogle begrænsninger og den er ikke særligt god,
-hvis det ikke er et portrætbillede, hvor man kigger lige i kameraet, man har af den, der skal styres.
-Det samme gælder for deepfake videoer. Det virker bedst, hvis der er mange portrætbilleder. Deepfake videoerne
-skal faktisk bruge rigtigt mange billeder af dig, for at lave noget, der er så overbevisende som dem i introvideoen.
-Så overvej derfor hvor mange billeder og videoer du lægger af dig selv (og dine venner!) på sociale medier.
-Prøv også at lave dine profilbilleder, så man altid ser dig fra siden.
-
-Men hvad nu hvis nogen bruger et billede af dig til at lave en deepfake? Måske i en situation, som du slet ikke
-har lyst til at andre skal se dig i. Hvad kan du så gøre?
-For det første kan det være strafbart, så involver dine forældre eller andre voksne du stoler, f.eks. din spejderleder,
-på og få det anmeldt til politiet. Mange forsikringsselskaber har også hjælp og dækning, hvis din digitale identitet
-bliver misbrugt, så der kan der også være hjælp at hente. Sig også tydeligt til dem, du kender, at det er en deepfake
-og du ikke har noget med det at gøre. Deepfaken er sikkert heller ikke særligt god, da det kræver mange timers arbejde
-at lave en professionel deepfake, så du kan sikkert nemt pege på fejl i videoen, der viser det er en deepfake.
-
-Men hvad så, hvis du i virkeligheden er blevet filmet i en situation, du helst ikke ville filmes i?
-Så kan du jo påstå at det er en deepfake, nogen har lavet af dig!
-'''
-}
 
 
 def load_images(IMG_SIZE=256):
@@ -157,10 +84,6 @@ class ButtonRow(BoxLayout):
     white_button = StringProperty(None)
     black_button = StringProperty(None)
 
-    def __init__(self, **kwargs):
-        super(ButtonRow, self).__init__(**kwargs)
-        self.size_hint_max_y = 150
-
     def on_yellow_button(self, instance, value):
         self.build_btn(value, 'images/large_yellow_arcade.png')
 
@@ -174,19 +97,6 @@ class ButtonRow(BoxLayout):
         self.build_btn(value, 'images/black_arcade.png')
 
     def build_btn(self, btn_txt, file):
-        """
-        cnt = BoxLayout()
-        btn = Image(source=file)
-        btn.size_hint = None, None
-        cnt.add_widget(btn)
-        lbl = Label()
-        lbl.text = btn_txt
-        lbl.text_size = lbl.size
-        lbl.size_hint = 1, None
-        lbl.haling = 'left'
-        lbl.valign = 'center'
-        cnt.add_widget(lbl)
-        """
         cnt = ArcadeButton(text=btn_txt, file=file)
         self.add_widget(cnt)
 
@@ -204,8 +114,19 @@ class IntroScreen(Screen):
             intro_video.state = intro_video.state if not intro_video.state == 'stop' else 'play'
 
     def on_keyboard(self, key):
+        intro_video = self.ids['intro_video']
         if key == YELLOW_KEY:
             self.manager.current = 'persons'
+        if key == WHITE_KEY:
+            App.get_running_app().lang = 'da'
+            intro_video.state = 'stop'
+            intro_video.position = 0
+            intro_video.state = 'play'
+        if key == BLACK_KEY:
+            App.get_running_app().lang = 'en'
+            intro_video.state = 'stop'
+            intro_video.position = 0
+            intro_video.state = 'play'
 
 
 class FakePersonAnswerScreen(Screen):
@@ -425,7 +346,14 @@ class Screens(ScreenManager):
 
 
 class SL22App(App):
-    texts = texts
+    texts = DictProperty(texts_da)
+    lang = StringProperty('da')
+
+    def on_lang(self, instance, value):
+        if self.lang == 'da':
+            self.texts = texts_da
+        else:
+            self.texts = texts_en
 
 
 if __name__ == '__main__':
