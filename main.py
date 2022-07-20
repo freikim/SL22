@@ -5,13 +5,13 @@ import cv2
 import numpy as np
 
 from kivy.app import App
+from kivy.config import Config
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.graphics.texture import Texture
 from kivy.properties import StringProperty, NumericProperty, BooleanProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
-from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 from predictor_local import PredictorLocal
@@ -174,13 +174,26 @@ class ButtonRow(BoxLayout):
         self.build_btn(value, 'images/black_arcade.png')
 
     def build_btn(self, btn_txt, file):
+        """
         cnt = BoxLayout()
         btn = Image(source=file)
+        btn.size_hint = None, None
         cnt.add_widget(btn)
         lbl = Label()
         lbl.text = btn_txt
+        lbl.text_size = lbl.size
+        lbl.size_hint = 1, None
+        lbl.haling = 'left'
+        lbl.valign = 'center'
         cnt.add_widget(lbl)
+        """
+        cnt = ArcadeButton(text=btn_txt, file=file)
         self.add_widget(cnt)
+
+
+class ArcadeButton(BoxLayout):
+    text = StringProperty()
+    file = StringProperty()
 
 
 class IntroScreen(Screen):
@@ -416,5 +429,8 @@ class SL22App(App):
 
 
 if __name__ == '__main__':
-    # Window.fullscreen = 'auto'
+    Config.set('graphics', 'minimum_width', '1920')
+    Config.set('graphics', 'minimum_height', '1080')
+    Window.fullscreen = 'fake'
+    Window.size = (1920, 1080)
     SL22App().run()
