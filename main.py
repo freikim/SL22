@@ -28,7 +28,7 @@ texts = {
     'intro': '''
 Med kunstig intelligens er det muligt at ændre videoer og billeder, så det oprindelige indhold bliver erstattet af noget andet.
 Det kalder man Deep Fake. Her kan du se nogle eksempler på Deep Fake videoer og selv lege med at styre en kendts ansigt.
-Videoen nedenunder er 80 af de bedste Deep Fakes, der er lavet.
+YuoTube kanalen "Daily Dose of Deepfake" viser her 80 af de bedste Deep Fakes.
 ''',
     'videos': '''
 På fakeyou.com kan du lave dine egne små videoer, hvor en kendt person siger eller synder det, som du har optaget i en lydfil.
@@ -185,6 +185,11 @@ class ButtonRow(BoxLayout):
 
 class IntroScreen(Screen):
 
+    def restart_video(self):
+        if 'intro_video' in self.ids:
+            intro_video = self.ids['intro_video']
+            intro_video.state = intro_video.state if not intro_video.state == 'stop' else 'play'
+
     def on_keyboard(self, key):
         if key == YELLOW_KEY:
             self.manager.current = 'persons'
@@ -255,6 +260,12 @@ class VideoScreen(Screen):
         'videos/vocodes_video_JWINFe8289c79rt5czjgp2w7t915tp1.mp4',
         'videos/vocodes_video_JWINFs0e28zvdpswjfdved778xxhasm.mp4'
     ]
+
+    def on_enter(self):
+        if 'player' in self.ids:
+            intro_video = self.ids['player']
+            intro_video.state = 'play'
+            intro_video.options = {'eos': 'stop'}
 
     def on_keyboard(self, key):
         if key == WHITE_KEY:

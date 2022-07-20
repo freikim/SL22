@@ -15,6 +15,7 @@ Screens:
     on_enter: intro_video.state = 'play'
     on_leave: intro_video.state = 'pause'
     BoxLayout:
+        id: layout
         orientation: 'vertical'
         Image:
             size_hint: 1, None
@@ -31,7 +32,7 @@ Screens:
             source: 'videos/Top 80 Deepfake Videos - Only Highlights!.mp4'
             annotations: 'videos/subtitles.jsa'
             state: 'play'
-            options: {'eos': 'loop'}
+            on_state: root.restart_video()
         ButtonRow:
             yellow_button: 'Lad os komme igang!'
 
@@ -93,9 +94,8 @@ Screens:
             font_size: 12
             text_size: self.size
             halign: 'center'
-        GridLayout:
+        BoxLayout:
             size_hint_max_y: 200
-            cols: 2
             spacing: 100
             Image:
                 id: camera
@@ -112,7 +112,6 @@ Screens:
 <VideoScreen>:
     name: 'videos'
     id: container
-    on_enter: player.state = 'play'
     on_leave: player.state = 'stop'
     on_idx: player.state = 'play'
     BoxLayout:
@@ -120,15 +119,17 @@ Screens:
         Image:
             size_hint: 1, None
             source: 'images/videos.png'
+        Label:
+            size_hint: 1, None
+            text: app.texts['videos']
+            font_size: 18
+            text_size: self.size
+            halign: 'center'
         VideoPlayer:
             id: player
             size_hint: 1, 0.4
             source: container.videos[container.idx]
             state: 'stop'
-        Label:
-            size_hint: 1, None
-            text: app.texts['videos']
-            text_size: self.size
         ButtonRow:
             yellow_button: 'Lad os komme videre'
             black_button: 'Næste video'
@@ -144,5 +145,9 @@ Screens:
         Label:
             size_hint: 1, None
             text: app.texts['outro']
+            font_size: 18
             text_size: self.size
             halign: 'center'
+        ButtonRow:
+            yellow_button: 'Tak, så ved jeg det!'
+
