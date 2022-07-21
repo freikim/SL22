@@ -123,32 +123,32 @@ Try also to change the Distance between Your Head and the Camera.
 Do You notice any shortcomings in the Artificial Intelligence's ability? Sometime the Result is really awkward!
     ''',
     'outro': '''
-Nu har du set nogle eksempler på hvordan man kan lave falske videoer og endda styre en anden person live
-og dermed lave en falsk optræden på Zoom eller Teams. Det vi har vist her er harmløst og er bare sjov,
-men i forbindelse med krigen i Ukraine har Rusland lavet en Deepfake med Ukraines præsident Zelensky,
-hvor han siger til de Ukrainske styrker at de skal overgive sig og nedlægge våbnene. Den video var faktisk
-ikke særligt god, så der er nok ingen, der ville tro på det uden lige at undersøge sagen nærmere.
-Men nogle af de videoer du så på introduktionssiden er lavet super professionelt og kan være svære at afsløre
-som falske. Nogle af dem kan du kun se er falske, fordi du ved, hvem der er den rigtige skuespiller i filmen.
+You have seen some Examples on how One can make Fake Videos and even control another Person in Live View thus
+creating a false Appearance in Zoom or Teams. What we have shown here is Harmless and just for Fun but in
+relation to the War in Ukraine Russia has made a Fake Video of Ukraine's President Zelensky where he asks
+the Ukrainian Soldiers to lay down Arms and surrender. That Video was actually not of a very good Quality
+making it difficult for People to believe in with out giving it a Second Thought. But some of the Videos on
+the Introduction Page are made very Professionally and are much more difficult to reveal as Deepfakes.
+Most likely You only spotted some of the Videos as Fake because You now the Original Actors of the Movie.
 
-Hvad nu hvis du ikke selv har lyst til at blive brugt i en Deepfake video?
-Hvis du husker fra ‘Styr en kendt’, så havde teknologien nogle begrænsninger og den er ikke særligt god,
-hvis det ikke er et portrætbillede, hvor man kigger lige i kameraet, man har af den, der skal styres.
-Det samme gælder for deepfake videoer. Det virker bedst, hvis der er mange portrætbilleder. Deepfake videoerne
-skal faktisk bruge rigtigt mange billeder af dig, for at lave noget, der er så overbevisende som dem i introvideoen.
-Så overvej derfor hvor mange billeder og videoer du lægger af dig selv (og dine venner!) på sociale medier.
-Prøv også at lave dine profilbilleder, så man altid ser dig fra siden.
+But what if You are not interested in being used in a Deepfake Video Yourself?
+Remember 'Control a Celebrity'? You saw some Shortcomings of the Technology and it is performing poorly if
+the Picture of the Person to be controlled is not a Portrait with the Head facing straight to the Camera.
+The same is True for Deepfake Videos. They perform best if there are many Portrait Pictures. Actually a lot of
+Pictures are needed to make something that is convincing and looks professional. So consider how many Pictures of
+You (and Your Friends!) should exist on Social Media where Everyone can download them. Also try to make sure that
+the Pictures are in Profile and not straight facing the Camera.
 
-Men hvad nu hvis nogen bruger et billede af dig til at lave en deepfake? Måske i en situation, som du slet ikke
-har lyst til at andre skal se dig i. Hvad kan du så gøre?
-For det første kan det være strafbart, så involver dine forældre eller andre voksne du stoler, f.eks. din spejderleder,
-på og få det anmeldt til politiet. Mange forsikringsselskaber har også hjælp og dækning, hvis din digitale identitet
-bliver misbrugt, så der kan der også være hjælp at hente. Sig også tydeligt til dem, du kender, at det er en deepfake
-og du ikke har noget med det at gøre. Deepfaken er sikkert heller ikke særligt god, da det kræver mange timers arbejde
-at lave en professionel deepfake, så du kan sikkert nemt pege på fejl i videoen, der viser det er en deepfake.
+But what if Someone uses a Picture of You and makes a Deepfake? Perhaps in a Situation You would absolutely not
+like that Other should see You in! What can You do?
+First of all, it is most likely Illegal so involve People You trust, like Your Parents, School Teacher or Scout Master
+and file a Complaint with the Police. There also many Insurance Companies that cover misuse of One's Digital Identity
+and They may be able to help. Tell Everyone You know that it is a Deepfake and You have nothing to do with it.
+Most likely the Deepfake is not very good either as it requires many Hours of Work to create a Professional Deepfake,
+so it is probably easy to point out mistakes and glitches in the video, showing that it is a Deepfake. 
 
-Men hvad så, hvis du i virkeligheden er blevet filmet i en situation, du helst ikke ville filmes i?
-Så kan du jo påstå at det er en deepfake, nogen har lavet af dig!
+But what if You in Reality has been recorded in a Situation You would rather not be recorded in?
+Then You can claim that Someone made a Deepfake of You! 
 ''',
     'lets_start_btn': 'Let\'s get started!',
     'skip_btn': 'Skip this!',

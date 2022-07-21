@@ -341,7 +341,7 @@ class Screens(ScreenManager):
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self, 'text')
         print('Keyboard:', self._keyboard)
         self._keyboard.bind(on_key_down=self.on_keyboard_down)
-        self._inactivity_timer = Clock.schedule_interval(self._inactive, 30)
+        self._inactivity_timer = Clock.schedule_interval(self._inactive, 120)
         self._activity = False
 
     def _keyboard_closed(self):
