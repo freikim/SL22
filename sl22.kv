@@ -52,7 +52,7 @@ Screens:
             state: 'play'
             on_state: root.restart_video()
         ButtonRow:
-            yellow_button: app.texts['lets_start']
+            yellow_button: app.texts['lets_start_btn']
             white_button: 'Dansk / Danish'
             black_button: 'English / Engelsk'
 
@@ -74,7 +74,7 @@ Screens:
         BoxLayout:
             id: fake_row
         ButtonRow:
-            yellow_button: app.texts['carry_on']
+            yellow_button: app.texts['skip_btn']
             blue_button: app.texts['famous_btn']
             black_button: app.texts['participant_btn']
             white_button: app.texts['nonexist_btn']
@@ -100,7 +100,7 @@ Screens:
             halign: 'center'
             valign: 'center'
         ButtonRow:
-            yellow_button: app.texts['carry_on']
+            yellow_button: app.texts['carry_on_btn']
 
 <CameraAndPlaybackScreen>:
     name: 'camfun'
@@ -110,22 +110,26 @@ Screens:
             size_hint: 1, None
             source: 'images/avatar.png' if app.lang == 'da' else 'images/avatar_en.png'
         Label:
-            size_hint: 1, None
+            font_size: 18
+            size_hint_y: 2
+            text_size: (self.width, None)
             text: app.texts['camfun']
-            font_size: 12
-            text_size: self.size
             halign: 'center'
         BoxLayout:
-            size_hint_max_y: 200
+            size_hint_y: 5
             spacing: 100
+            Label:
+                text: ''
             Image:
                 id: camera
                 halign: 'right'
             Image:
                 id: avatar
                 halign: 'left'
+            Label:
+                text: ''
         ButtonRow:
-            yellow_button: app.texts['carry_on']
+            yellow_button: app.texts['skip_btn']
             blue_button: app.texts['calibrate_btn']
             black_button: app.texts['next_avatar_btn']
             white_button: app.texts['prev_avatar_btn']
@@ -152,7 +156,7 @@ Screens:
             source: container.videos[container.idx]
             state: 'stop'
         ButtonRow:
-            yellow_button: app.texts['carry_on']
+            yellow_button: app.texts['skip_btn']
             black_button: app.texts['next_video_btn']
             white_button: app.texts['prev_video_btn']
 

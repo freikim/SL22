@@ -67,8 +67,9 @@ at lave en professionel deepfake, så du kan sikkert nemt pege på fejl i videoe
 Men hvad så, hvis du i virkeligheden er blevet filmet i en situation, du helst ikke ville filmes i?
 Så kan du jo påstå at det er en deepfake, nogen har lavet af dig!
 ''',
-    'lets_start': 'Lad os komme igang!',
-    'carry_on': 'Spring over!',
+    'lets_start_btn': 'Lad os komme igang!',
+    'skip_btn': 'Spring dette over!',
+    'carry_on_btn': 'Videre!',
     'famous_btn': 'De er berømte!',
     'participant_btn': 'De er deltager på lejren!',
     'nonexist_btn': 'De er findes ikke i virkeligheden!',
@@ -149,8 +150,9 @@ at lave en professionel deepfake, så du kan sikkert nemt pege på fejl i videoe
 Men hvad så, hvis du i virkeligheden er blevet filmet i en situation, du helst ikke ville filmes i?
 Så kan du jo påstå at det er en deepfake, nogen har lavet af dig!
 ''',
-    'lets_start': 'Let\'s get started!',
-    'carry_on': 'Go ahead!',
+    'lets_start_btn': 'Let\'s get started!',
+    'skip_btn': 'Skip this!',
+    'carry_on_btn': 'Go ahead!',
     'famous_btn': 'They are famous!',
     'participant_btn': 'They participate in the Camp!',
     'nonexist_btn': 'They don\'t exist in our reality!',
