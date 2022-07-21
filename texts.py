@@ -1,5 +1,3 @@
-
-
 texts_da = {
     'intro': '''
 Med kunstig intelligens er det muligt at ændre videoer og billeder, så det oprindelige indhold bliver erstattet af noget andet.
@@ -15,6 +13,8 @@ Tryk på knapperne for at bladre i videoerne.
     'persons': '''
 Her ser du billeder af nogle personer. Hvad har de til fælles?
     ''',
+    'persons_correct': 'Det er helt rigtigt!\nDe findes nemlig slet ikke.',
+    'persons_wrong': 'Det er desværre forkert!\nDe findes ikke i virkeligheden.',
     'persons_explanation': '''
 Grafikkort producenten Nvidia arbejdede i 2018 med at lave en kunstig
 intelligens, der kunne afsløre falske billeder af ansigter. Under det
@@ -32,18 +32,12 @@ sidde mærkeligt. Andre fejl, der tit optræder er mærkelige baggrunde,
 specielt hvis der er mere end et ansigt i billedet. 
 ''',
     'camfun': '''
-Nogle forskere arbejdede med at lære kunstig intelligens at bevæge et billede ud fra videooptagelser af en anden situation.
+Nogle forskere arbejdede med at lære kunstig intelligens at bevæge et billede ud fra det et videokamera optager.
 Det er der kommet denne lille sjove applikation ud af. Du kan styre nogle forskellige personer, som du burde kende,
 ved at se ind i kameraet, få dit ansigt til at fylde den blå firkant og så trykke på knappen “Kalibrer billedet”.
 Prøv at bevæge dig og tal, blink med øjnene, drej hovedet fra side til side.
 Prøv også at ændre afstanden mellem kameraet og dit hovede.
 Kan du se begrænsningerne i den kunstige intelligens? Det er ikke altid at resultatet ser super godt ud.
-
-Denne software kan installeres på din PC og bruges til at ændre en optagelse af dig til noget andet,
-når du f.eks. deltager i et Zoom møde eller er i Teams sammen med dine klassekammerater.
-Hvis du vil hente det selv, så skal u nok være lidt skrap til engelsk og til PC’ere, men du kan
-finde vejledningen på https://github.com/alievk/avatarify-desktop under Installation.
-Du skal have en Gamer PC for grafikkortet bruges til beregningerne, der altså kræver en hel del,, når det skal være live video.
     ''',
     'outro': '''
 Nu har du set nogle eksempler på hvordan man kan lave falske videoer og endda styre en anden person live
@@ -73,9 +67,18 @@ at lave en professionel deepfake, så du kan sikkert nemt pege på fejl i videoe
 Men hvad så, hvis du i virkeligheden er blevet filmet i en situation, du helst ikke ville filmes i?
 Så kan du jo påstå at det er en deepfake, nogen har lavet af dig!
 ''',
-    'lets_start': 'Lad os komme igang!'
+    'lets_start': 'Lad os komme igang!',
+    'carry_on': 'Spring over!',
+    'famous_btn': 'De er berømte!',
+    'participant_btn': 'De er deltager på lejren!',
+    'nonexist_btn': 'De er findes ikke i virkeligheden!',
+    'calibrate_btn': 'Kalibrer billedet',
+    'next_avatar_btn': 'Næste Avatar',
+    'prev_avatar_btn': 'Forrige Avatar',
+    'next_video_btn': 'Næste video',
+    'prev_video_btn': 'Forrige video',
+    'end_btn': 'Tak, så ved jeg det!'
 }
-
 
 texts_en = {
     'intro': '''
@@ -93,6 +96,8 @@ Push the Buttons to scroll through the Videos.
 
 Here are some Pictures of different People. What do they have in common?
     ''',
+    'persons_correct': 'That is absolutely correct!\nThese People do not exist.',
+    'persons_wrong': 'That is unfortunately wrong!\nThese People do not exist.',
     'persons_explanation': '''
 Graphics Card Producer Nvidia research in 2018 how to make an Artificial
 Intelligence that could detect pictures of fake faces. During te research
@@ -109,18 +114,12 @@ are placed in wrong Positions. Other Error that frequently occurs are weird back
 especially if there are more than one Face in the Picture.
 ''',
     'camfun': '''
-Nogle forskere arbejdede med at lære kunstig intelligens at bevæge et billede ud fra videooptagelser af en anden situation.
-Det er der kommet denne lille sjove applikation ud af. Du kan styre nogle forskellige personer, som du burde kende,
-ved at se ind i kameraet, få dit ansigt til at fylde den blå firkant og så trykke på knappen “Kalibrer billedet”.
-Prøv at bevæge dig og tal, blink med øjnene, drej hovedet fra side til side.
-Prøv også at ændre afstanden mellem kameraet og dit hovede.
-Kan du se begrænsningerne i den kunstige intelligens? Det er ikke altid at resultatet ser super godt ud.
-
-Denne software kan installeres på din PC og bruges til at ændre en optagelse af dig til noget andet,
-når du f.eks. deltager i et Zoom møde eller er i Teams sammen med dine klassekammerater.
-Hvis du vil hente det selv, så skal u nok være lidt skrap til engelsk og til PC’ere, men du kan
-finde vejledningen på https://github.com/alievk/avatarify-desktop under Installation.
-Du skal have en Gamer PC for grafikkortet bruges til beregningerne, der altså kræver en hel del,, når det skal være live video.
+Some Scientists tried to teach Artificial Intelligence to animate a Picture from a Live Video Stream.
+The Result is this little, fun Application. You can control different Celebrities - You ought to know most of them -
+by looking into the Camera, align Your Face so it fills the blue Rectangle and then push the button "Calibrate Picture".
+Try to move Your Head, talk, blink Your Eyes and turn Your head from Side to Side.
+Try also to change the Distance between Your Head and the Camera.
+Do You notice any shortcomings in the Artificial Intelligence's ability? Sometime the Result is really awkward!
     ''',
     'outro': '''
 Nu har du set nogle eksempler på hvordan man kan lave falske videoer og endda styre en anden person live
@@ -150,6 +149,15 @@ at lave en professionel deepfake, så du kan sikkert nemt pege på fejl i videoe
 Men hvad så, hvis du i virkeligheden er blevet filmet i en situation, du helst ikke ville filmes i?
 Så kan du jo påstå at det er en deepfake, nogen har lavet af dig!
 ''',
-    'lets_start': 'Let\'s get started!'
-
+    'lets_start': 'Let\'s get started!',
+    'carry_on': 'Go ahead!',
+    'famous_btn': 'They are famous!',
+    'participant_btn': 'They participate in the Camp!',
+    'nonexist_btn': 'They don\'t exist in our reality!',
+    'calibrate_btn': 'Calibrate Picture',
+    'next_avatar_btn': 'Next Avatar',
+    'prev_avatar_btn': 'Previous Avatar',
+    'next_video_btn': 'Next video',
+    'prev_video_btn': 'Previous video',
+    'end_btn': 'Thanks, now I know more!'
 }

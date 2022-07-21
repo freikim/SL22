@@ -84,21 +84,41 @@ class ButtonRow(BoxLayout):
     white_button = StringProperty(None)
     black_button = StringProperty(None)
 
+    def __init__(self, **kwargs):
+        super(ButtonRow, self).__init__(**kwargs)
+        self.yel_btn = None
+        self.blu_btn = None
+        self.whi_btn = None
+        self.blk_btn = None
+
     def on_yellow_button(self, instance, value):
-        self.build_btn(value, 'images/large_yellow_arcade.png')
+        if not self.yel_btn:
+            self.yel_btn = self.build_btn(value, 'images/large_yellow_arcade.png')
+        else:
+            self.yel_btn.ids['text'].text = value
 
     def on_blue_button(self, instance, value):
-        self.build_btn(value, 'images/large_blue_arcade.png')
+        if not self.blu_btn:
+            self.blu_btn = self.build_btn(value, 'images/large_blue_arcade.png')
+        else:
+            self.blu_btn.ids['text'].text = value
 
     def on_white_button(self, instance, value):
-        self.build_btn(value, 'images/white_arcade.png')
+        if not self.whi_btn:
+            self.whi_btn = self.build_btn(value, 'images/white_arcade.png')
+        else:
+            self.whi_btn.ids['text'].text = value
 
     def on_black_button(self, instance, value):
-        self.build_btn(value, 'images/black_arcade.png')
+        if not self.blk_btn:
+            self.blk_btn = self.build_btn(value, 'images/black_arcade.png')
+        else:
+            self.blk_btn.ids['text'].text = value
 
     def build_btn(self, btn_txt, file):
         cnt = ArcadeButton(text=btn_txt, file=file)
         self.add_widget(cnt)
+        return cnt
 
 
 class ArcadeButton(BoxLayout):
