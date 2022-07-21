@@ -69,12 +69,10 @@ def draw_rect(img, rw=0.6, rh=0.8, color=(255, 0, 0), thickness=2):
     img = cv2.rectangle(img, (int(l), int(u)), (int(r), int(d)), color, thickness)
 
 
-def draw_calib_text(frame, thk=2, fontsz=0.5, color=(0, 0, 255)):
+def draw_calib_text(frame, texts, thk=2, fontsz=0.5, color=(0, 0, 255)):
     frame = frame.copy()
-    cv2.putText(frame, "FIT FACE IN RECTANGLE", (40, 20), 0, fontsz * IMG_SIZE / 255, color, thk)
-    cv2.putText(frame, "W - ZOOM IN", (60, 40), 0, fontsz * IMG_SIZE / 255, color, thk)
-    cv2.putText(frame, "S - ZOOM OUT", (60, 60), 0, fontsz * IMG_SIZE / 255, color, thk)
-    cv2.putText(frame, "THEN PRESS X", (60, 245), 0, fontsz * IMG_SIZE / 255, color, thk)
+    cv2.putText(frame, texts['placement'], (40, 20), 0, fontsz * IMG_SIZE / 255, color, thk)
+    cv2.putText(frame, texts['calibrate'], (60, 245), 0, fontsz * IMG_SIZE / 255, color, thk)
     return frame
 
 
@@ -285,7 +283,7 @@ class CameraAndPlaybackScreen(Screen):
         preview_frame = frame.copy()
         draw_rect(preview_frame)
         if not self.is_calibrated:
-            preview_frame = draw_calib_text(preview_frame)
+            preview_frame = draw_calib_text(preview_frame, App.get_running_app().texts)
         self.ids['camera'].texture = self.to_texture(preview_frame)
 
         if self.is_calibrated:

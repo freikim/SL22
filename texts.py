@@ -34,7 +34,10 @@ specielt hvis der er mere end et ansigt i billedet.
     'camfun': '''
 Nogle forskere arbejdede med at lære kunstig intelligens at bevæge et billede ud fra det et videokamera optager.
 Det er der kommet denne lille sjove applikation ud af. Du kan styre nogle forskellige personer, som du burde kende,
-ved at se ind i kameraet, få dit ansigt til at fylde den blå firkant og så trykke på knappen “Kalibrer billedet”.
+ved at se ind i kameraet, få dit ansigt til at fylde den røde firkant og så trykke på knappen “Kalibrer billedet”.
+
+Du kan kalibrere billedet igen, hvis du ikke synes at den kendte følger dine bevægelser. Bare try kalibrer igen.
+
 Prøv at bevæge dig og tal, blink med øjnene, drej hovedet fra side til side.
 Prøv også at ændre afstanden mellem kameraet og dit hovede.
 Kan du se begrænsningerne i den kunstige intelligens? Det er ikke altid at resultatet ser super godt ud.
@@ -78,7 +81,9 @@ Så kan du jo påstå at det er en deepfake, nogen har lavet af dig!
     'prev_avatar_btn': 'Forrige Avatar',
     'next_video_btn': 'Næste video',
     'prev_video_btn': 'Forrige video',
-    'end_btn': 'Tak, så ved jeg det!'
+    'end_btn': 'Tak, så ved jeg det!',
+    'placement': 'PLACER ANSIGT I FIRKANT',
+    'calibrate': 'TRYK SÅ KALIBRER'
 }
 
 texts_en = {
@@ -117,7 +122,10 @@ especially if there are more than one Face in the Picture.
     'camfun': '''
 Some Scientists tried to teach Artificial Intelligence to animate a Picture from a Live Video Stream.
 The Result is this little, fun Application. You can control different Celebrities - You ought to know most of them -
-by looking into the Camera, align Your Face so it fills the blue Rectangle and then push the button "Calibrate Picture".
+by looking into the Camera, align Your Face so it fills the red Rectangle and then push the button "Calibrate Picture".
+
+You can Calibrate whenever You like to make the Celebrity match Your movements better - just press Calibrate again.
+
 Try to move Your Head, talk, blink Your Eyes and turn Your head from Side to Side.
 Try also to change the Distance between Your Head and the Camera.
 Do You notice any shortcomings in the Artificial Intelligence's ability? Sometime the Result is really awkward!
@@ -161,5 +169,7 @@ Then You can claim that Someone made a Deepfake of You!
     'prev_avatar_btn': 'Previous Avatar',
     'next_video_btn': 'Next video',
     'prev_video_btn': 'Previous video',
-    'end_btn': 'Thanks, now I know more!'
+    'end_btn': 'Thanks, now I know more!',
+    'placement': 'PLACE FACE IN RECTANGLE',
+    'calibrate': 'THEN PRESS CALIBRATE'
 }
