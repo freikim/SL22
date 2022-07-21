@@ -212,7 +212,7 @@ class VideoScreen(Screen):
     videos = [
         'videos/vocodes_video_JWINF2kb4vy9hqph994zbmq0e0khchm.mp4',
         'videos/vocodes_video_JWINFe8289c79rt5czjgp2w7t915tp1.mp4',
-        'videos/vocodes_video_JWINFs0e28zvdpswjfdved778xxhasm.mp4'
+        'videos/vocodes_video_JWINF9rrr2tvhancam06b16v41dnat5.mp4'
     ]
 
     def on_enter(self):
