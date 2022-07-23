@@ -21,10 +21,10 @@ from texts import texts_da, texts_en
 
 IMG_SIZE = 256
 
-YELLOW_KEY = 'g'
-BLUE_KEY = 'b'
-WHITE_KEY = 'h'
-BLACK_KEY = 's'
+YELLOW_KEY = 'h'
+BLUE_KEY = 's'
+WHITE_KEY = 'b'
+BLACK_KEY = 'g'
 
 
 def load_images(IMG_SIZE=256):
@@ -91,13 +91,13 @@ class ButtonRow(BoxLayout):
 
     def on_yellow_button(self, instance, value):
         if not self.yel_btn:
-            self.yel_btn = self.build_btn(value, 'images/large_yellow_arcade.png')
+            self.yel_btn = self.build_btn(value, 'images/large_white_arcade.png')
         else:
             self.yel_btn.ids['text'].text = value
 
     def on_blue_button(self, instance, value):
         if not self.blu_btn:
-            self.blu_btn = self.build_btn(value, 'images/large_blue_arcade.png')
+            self.blu_btn = self.build_btn(value, 'images/arcade_red.png')
         else:
             self.blu_btn.ids['text'].text = value
 
