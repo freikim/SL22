@@ -52,6 +52,9 @@ def load_stylegan_avatar():
     url = "https://thispersondoesnotexist.com/image"
     r = requests.get(url, headers={'User-Agent': "My User Agent 1.0"}).content
 
+    if r.status_code == 200:
+       return None
+
     image = np.frombuffer(r, np.uint8)
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -186,11 +189,12 @@ class NonExistingPeopleScreen(Screen):
         if not pos:
             pos = random.choice(self.fake_person)
         frame = load_stylegan_avatar()
+        if frame:
         buf1 = cv2.flip(frame, 0)
-        buf = buf1.tobytes()
-        texture1 = Texture.create(size=(IMG_SIZE, IMG_SIZE))
-        texture1.blit_buffer(buf, bufferfmt='ubyte')
-        pos.texture = texture1
+            buf = buf1.tobytes()
+            texture1 = Texture.create(size=(IMG_SIZE, IMG_SIZE))
+            texture1.blit_buffer(buf, bufferfmt='ubyte')
+            pos.texture = texture1
 
     def on_keyboard(self, key):
         manager = self.manager
