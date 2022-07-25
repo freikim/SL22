@@ -105,7 +105,7 @@ Screens:
         Label:
             text: app.texts['persons_explanation']
             text_size: self.size
-            font_size: 18
+            font_size: 24
             halign: 'center'
             valign: 'center'
         ButtonRow:
@@ -121,7 +121,7 @@ Screens:
         Label:
             font_size: 18
             size_hint_y: 2
-            text_size: (self.width, None)
+            text_size: self.width, None
             text: app.texts['camfun']
             halign: 'center'
         BoxLayout:
@@ -157,14 +157,14 @@ Screens:
             size_hint: 1, None
             source: 'images/videos.png' if app.lang == 'da' else 'images/videos_en.png'
         Label:
-            size_hint: 1, None
+            size_hint: 1, 1
             text: app.texts['videos']
             font_size: 18
             text_size: self.size
             halign: 'center'
         VideoPlayer:
             id: player
-            size_hint: 1, 0.4
+            size_hint: 1, 4
             source: container.videos[container.idx]
             state: 'stop'
         ButtonRow:
