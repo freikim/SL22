@@ -340,6 +340,8 @@ class Screens(ScreenManager):
         print('Keyboard:', self._keyboard)
         self._keyboard.bind(on_key_down=self.on_keyboard_down)
         self._inactivity_timer = Clock.schedule_interval(self._inactive, 120)
+        self._debounce_timer = Clock.schedule_interval(self._debounce, 1)
+        self._last_key = None
         self._activity = False
 
     def _keyboard_closed(self):
@@ -349,6 +351,9 @@ class Screens(ScreenManager):
     def on_keyboard_down(self, keyboard, keycode, text, modifiers):
         self._activity = True
         key = keycode[1]
+        if key == self._last_key:
+            return True
+        self._last_key = key
         if key in [YELLOW_KEY, BLUE_KEY, BLACK_KEY, WHITE_KEY]:
             self.current_screen.on_keyboard(key)
         elif key == 'escape':
@@ -361,6 +366,9 @@ class Screens(ScreenManager):
             if not self.current == 'intro':
                 self.current = 'intro'
         self._activity = False
+
+    def _debounce(self, dt):
+        self._last_key = None
 
 
 class SL22App(App):
