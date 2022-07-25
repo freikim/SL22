@@ -243,7 +243,7 @@ class VideoScreen(Screen):
             intro_video = self.ids['player']
             intro_video.state = 'play'
         elif key == YELLOW_KEY:
-            self.manager.current = 'outro'
+            self.manager.current = 'outro1'
 
 
 class CameraAndPlaybackScreen(Screen):
@@ -337,7 +337,25 @@ class CameraAndPlaybackScreen(Screen):
             self.manager.current = 'videos'
 
 
-class Outro(Screen):
+class Outro1(Screen):
+
+    def on_keyboard(self, key):
+        if key == YELLOW_KEY:
+            self.manager.current = 'intro'
+        elif key == BLACK_KEY:
+            self.manager.current = 'outro2'
+
+
+class Outro2(Screen):
+
+    def on_keyboard(self, key):
+        if key == YELLOW_KEY:
+            self.manager.current = 'intro'
+        elif key == BLACK_KEY:
+            self.manager.current = 'outro3'
+
+
+class Outro3(Screen):
 
     def on_keyboard(self, key):
         if key == YELLOW_KEY:

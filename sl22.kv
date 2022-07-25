@@ -8,7 +8,9 @@ Screens:
     FakePersonAnswerScreen:
     CameraAndPlaybackScreen:
     VideoScreen:
-    Outro:
+    Outro1:
+    Outro2:
+    Outro3:
 
 <ArcadeButton>:
     spacing: 10
@@ -22,9 +24,15 @@ Screens:
         text: root.text
         font_size: 24
         text_size: self.size
-        size_hint: None, None
+        size_hint: 1, None
         halign: 'left'
         valign: 'center'
+        # canvas:
+        #     Color:
+        #         rgba: 1, 0, 0, 0.3
+        #     Rectangle:
+        #         pos: self.pos
+        #         size: self.size
 
 <ButtonRow>:
     size_hint_y: None
@@ -165,21 +173,52 @@ Screens:
             black_button: app.texts['next_video_btn']
             white_button: app.texts['prev_video_btn']
 
-<Outro>:
-    name: 'outro'
+<Outro1>:
+    name: 'outro1'
     BoxLayout:
         orientation: 'vertical'
         Image:
             size_hint: 1, None
             source: 'images/outro.png' if app.lang == 'da' else 'images/outro_en.png'
-        ScrollView:
-            do_scroll_x: False
-            do_scroll_y: True
-            size_hint_y: 2
-            Label:
-                font_size: 28
-                text: app.texts['outro']
-                halign: 'center'
+        Label:
+            font_size: 28
+            text: app.texts['outro1']
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
         ButtonRow:
             yellow_button: app.texts['end_btn']
+            black_button: app.texts['more_btn']
 
+<Outro2>:
+    name: 'outro2'
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            size_hint: 1, None
+            source: 'images/outro.png' if app.lang == 'da' else 'images/outro_en.png'
+        Label:
+            font_size: 28
+            text: app.texts['outro2']
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+        ButtonRow:
+            yellow_button: app.texts['end_btn']
+            black_button: app.texts['more_btn']
+
+<Outro3>:
+    name: 'outro3'
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            size_hint: 1, None
+            source: 'images/outro.png' if app.lang == 'da' else 'images/outro_en.png'
+        Label:
+            font_size: 28
+            text: app.texts['outro3']
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+        ButtonRow:
+            yellow_button: app.texts['end_btn']

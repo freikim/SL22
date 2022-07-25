@@ -36,13 +36,13 @@ Nogle forskere arbejdede med at lære kunstig intelligens at bevæge et billede 
 Det er der kommet denne lille sjove applikation ud af. Du kan styre nogle forskellige personer, som du burde kende,
 ved at se ind i kameraet, få dit ansigt til at fylde den røde firkant og så trykke på knappen “Kalibrer billedet”.
 
-Du kan kalibrere billedet igen, hvis du ikke synes at den kendte følger dine bevægelser. Bare try kalibrer igen.
+Du kan kalibrere billedet igen, hvis du ikke synes at den kendte følger dine bevægelser. Bare tryk kalibrer igen.
 
 Prøv at bevæge dig og tal, blink med øjnene, drej hovedet fra side til side.
 Prøv også at ændre afstanden mellem kameraet og dit hovede.
 Kan du se begrænsningerne i den kunstige intelligens? Det er ikke altid at resultatet ser super godt ud.
     ''',
-    'outro': '''
+    'outro1': '''
 Nu har du set nogle eksempler på hvordan man kan lave falske videoer og endda styre en anden person live
 og dermed lave en falsk optræden på Zoom eller Teams. Det vi har vist her er harmløst og er bare sjov,
 men i forbindelse med krigen i Ukraine har Rusland lavet en Deepfake med Ukraines præsident Zelensky,
@@ -50,7 +50,8 @@ hvor han siger til de Ukrainske styrker at de skal overgive sig og nedlægge vå
 ikke særligt god, så der er nok ingen, der ville tro på det uden lige at undersøge sagen nærmere.
 Men nogle af de videoer du så på introduktionssiden er lavet super professionelt og kan være svære at afsløre
 som falske. Nogle af dem kan du kun se er falske, fordi du ved, hvem der er den rigtige skuespiller i filmen.
-
+''',
+    'outro2': '''
 Hvad nu hvis du ikke selv har lyst til at blive brugt i en Deepfake video?
 Hvis du husker fra ‘Styr en kendt’, så havde teknologien nogle begrænsninger og den er ikke særligt god,
 hvis det ikke er et portrætbillede, hvor man kigger lige i kameraet, man har af den, der skal styres.
@@ -58,7 +59,8 @@ Det samme gælder for deepfake videoer. Det virker bedst, hvis der er mange port
 skal faktisk bruge rigtigt mange billeder af dig, for at lave noget, der er så overbevisende som dem i introvideoen.
 Så overvej derfor hvor mange billeder og videoer du lægger af dig selv (og dine venner!) på sociale medier.
 Prøv også at lave dine profilbilleder, så man altid ser dig fra siden.
-
+''',
+    'outro3': '''
 Men hvad nu hvis nogen bruger et billede af dig til at lave en deepfake? Måske i en situation, som du slet ikke
 har lyst til at andre skal se dig i. Hvad kan du så gøre?
 For det første kan det være strafbart, så involver dine forældre eller andre voksne du stoler, f.eks. din spejderleder,
@@ -83,6 +85,7 @@ Så kan du jo påstå at det er en deepfake, nogen har lavet af dig!
     'next_video_btn': 'Næste video',
     'prev_video_btn': 'Forrige video',
     'end_btn': 'Start forfra',
+    'more_btn': 'Læs mere',
     'placement': 'PLACER ANSIGT I FIRKANT',
     'calibrate': 'TRYK SÅ KALIBRER'
 }
@@ -131,7 +134,7 @@ Try to move Your Head, talk, blink Your Eyes and turn Your head from Side to Sid
 Try also to change the Distance between Your Head and the Camera.
 Do You notice any shortcomings in the Artificial Intelligence's ability? Sometime the Result is really awkward!
     ''',
-    'outro': '''
+    'outro1': '''
 You have seen some Examples on how One can make Fake Videos and even control another Person in Live View thus
 creating a false Appearance in Zoom or Teams. What we have shown here is Harmless and just for Fun but in
 relation to the War in Ukraine Russia has made a Fake Video of Ukraine's President Zelensky where he asks
@@ -139,7 +142,8 @@ the Ukrainian Soldiers to lay down Arms and surrender. That Video was actually n
 making it difficult for People to believe in with out giving it a Second Thought. But some of the Videos on
 the Introduction Page are made very Professionally and are much more difficult to reveal as Deepfakes.
 Most likely You only spotted some of the Videos as Fake because You now the Original Actors of the Movie.
-
+''',
+    'outro2': '''
 But what if You are not interested in being used in a Deepfake Video Yourself?
 Remember 'Control a Celebrity'? You saw some Shortcomings of the Technology and it is performing poorly if
 the Picture of the Person to be controlled is not a Portrait with the Head facing straight to the Camera.
@@ -147,7 +151,8 @@ The same is True for Deepfake Videos. They perform best if there are many Portra
 Pictures are needed to make something that is convincing and looks professional. So consider how many Pictures of
 You (and Your Friends!) should exist on Social Media where Everyone can download them. Also try to make sure that
 the Pictures are in Profile and not straight facing the Camera.
-
+''',
+    'outro3': '''
 But what if Someone uses a Picture of You and makes a Deepfake? Perhaps in a Situation You would absolutely not
 like that Other should see You in! What can You do?
 First of all, it is most likely Illegal so involve People You trust, like Your Parents, School Teacher or Scout Master
@@ -172,6 +177,7 @@ Then You can claim that Someone made a Deepfake of You!
     'next_video_btn': 'Next video',
     'prev_video_btn': 'Previous video',
     'end_btn': 'Start over',
+    'more_btn': 'Read more',
     'placement': 'PLACE FACE IN RECTANGLE',
     'calibrate': 'THEN PRESS CALIBRATE'
 }
