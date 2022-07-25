@@ -79,9 +79,10 @@ Så kan du jo påstå at det er en deepfake, nogen har lavet af dig!
     'calibrate_btn': 'Kalibrer billedet',
     'next_avatar_btn': 'Næste Avatar',
     'prev_avatar_btn': 'Forrige Avatar',
+    'play_btn': 'Afspil igen',
     'next_video_btn': 'Næste video',
     'prev_video_btn': 'Forrige video',
-    'end_btn': 'Tak, så ved jeg det!',
+    'end_btn': 'Start forfra',
     'placement': 'PLACER ANSIGT I FIRKANT',
     'calibrate': 'TRYK SÅ KALIBRER'
 }
@@ -167,9 +168,10 @@ Then You can claim that Someone made a Deepfake of You!
     'calibrate_btn': 'Calibrate Picture',
     'next_avatar_btn': 'Next Avatar',
     'prev_avatar_btn': 'Previous Avatar',
+    'play_btn': 'Play again',
     'next_video_btn': 'Next video',
     'prev_video_btn': 'Previous video',
-    'end_btn': 'Thanks, now I know more!',
+    'end_btn': 'Start over',
     'placement': 'PLACE FACE IN RECTANGLE',
     'calibrate': 'THEN PRESS CALIBRATE'
 }

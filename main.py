@@ -50,12 +50,15 @@ def load_images(IMG_SIZE=256):
 def load_stylegan_avatar():
     print('new avatar')
     url = "https://thispersondoesnotexist.com/image"
-    r = requests.get(url, headers={'User-Agent': "My User Agent 1.0"}).content
+    try:
+        r = requests.get(url, headers={'User-Agent': "My User Agent 1.0"})
+    except:
+        return None
 
-    if r.status_code == 200:
-       return None
+    if not r.status_code == 200:
+        return None
 
-    image = np.frombuffer(r, np.uint8)
+    image = np.frombuffer(r.content, np.uint8)
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
@@ -189,8 +192,8 @@ class NonExistingPeopleScreen(Screen):
         if not pos:
             pos = random.choice(self.fake_person)
         frame = load_stylegan_avatar()
-        if frame:
-        buf1 = cv2.flip(frame, 0)
+        if frame is not None:
+            buf1 = cv2.flip(frame, 0)
             buf = buf1.tobytes()
             texture1 = Texture.create(size=(IMG_SIZE, IMG_SIZE))
             texture1.blit_buffer(buf, bufferfmt='ubyte')
@@ -199,14 +202,16 @@ class NonExistingPeopleScreen(Screen):
     def on_keyboard(self, key):
         manager = self.manager
         answer_screen = manager.get_screen('fake_answer')
-        if key == YELLOW_KEY:
-            manager.current = 'camfun'
-            return
-        elif key == WHITE_KEY:
+
+        if key == WHITE_KEY:
             answer_screen.correct = True
-        else:
+            manager.current = 'fake_answer'
+        elif key == BLACK_KEY or key == BLUE_KEY:
             answer_screen.correct = False
-        manager.current = 'fake_answer'
+            manager.current = 'fake_answer'
+        # elif key == YELLOW_KEY:
+        #    manager.current = 'camfun'
+        #    return
 
 
 class VideoScreen(Screen):
@@ -234,6 +239,9 @@ class VideoScreen(Screen):
                 self.idx = len(self.videos) - 1
             else:
                 self.idx -= 1
+        elif key == BLUE_KEY:
+            intro_video = self.ids['player']
+            intro_video.state = 'play'
         elif key == YELLOW_KEY:
             self.manager.current = 'outro'
 
@@ -341,10 +349,10 @@ class Screens(ScreenManager):
     def __init__(self, **kwargs):
         super(Screens, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self, 'text')
-        print('Keyboard:', self._keyboard)
+        # print('Keyboard:', self._keyboard)
         self._keyboard.bind(on_key_down=self.on_keyboard_down)
-        self._inactivity_timer = Clock.schedule_interval(self._inactive, 120)
-        self._debounce_timer = Clock.schedule_interval(self._debounce, 1)
+        self._inactivity_timer = Clock.schedule_interval(self._inactive, 45)
+        self._debounce_timer = Clock.schedule_interval(self._debounce, 0.3333333333)
         self._last_key = None
         self._activity = False
 
@@ -355,6 +363,9 @@ class Screens(ScreenManager):
     def on_keyboard_down(self, keyboard, keycode, text, modifiers):
         self._activity = True
         key = keycode[1]
+        if key == 'shift':
+            return True
+        print('keypress: ', key, self._last_key)
         if key == self._last_key:
             return True
         self._last_key = key

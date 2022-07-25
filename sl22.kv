@@ -20,6 +20,7 @@ Screens:
     Label:
         id: text
         text: root.text
+        font_size: 24
         text_size: self.size
         size_hint: None, None
         halign: 'left'
@@ -74,7 +75,7 @@ Screens:
         BoxLayout:
             id: fake_row
         ButtonRow:
-            yellow_button: app.texts['skip_btn']
+            # yellow_button: app.texts['skip_btn']
             blue_button: app.texts['famous_btn']
             black_button: app.texts['participant_btn']
             white_button: app.texts['nonexist_btn']
@@ -160,6 +161,7 @@ Screens:
             state: 'stop'
         ButtonRow:
             yellow_button: app.texts['skip_btn']
+            blue_button: app.texts['play_btn']
             black_button: app.texts['next_video_btn']
             white_button: app.texts['prev_video_btn']
 
@@ -170,13 +172,14 @@ Screens:
         Image:
             size_hint: 1, None
             source: 'images/outro.png' if app.lang == 'da' else 'images/outro_en.png'
-        Label:
-            font_size: 18
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
             size_hint_y: 2
-            height: self.texture_size[1]
-            text_size: (self.width, None)
-            text: app.texts['outro']
-            halign: 'center'
+            Label:
+                font_size: 28
+                text: app.texts['outro']
+                halign: 'center'
         ButtonRow:
             yellow_button: app.texts['end_btn']
 
